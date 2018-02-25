@@ -39,9 +39,10 @@ app.route('/')
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
 app.get('/:id', function(req, res){
-  var date =new Date(req.params.id);
-  var time=moment(date).format('LL');
-   res.send('The id you specified is ' + time);
+  //var date =new Date(req.params.id);
+  var time=moment.unix(req.params.id).format('LL');
+  var result
+   res.send('The id you specified is ' + moment(time).unix());
 });
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
