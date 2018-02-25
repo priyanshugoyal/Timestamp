@@ -41,8 +41,8 @@ app.route('/')
 app.get('/:id', function(req, res){
   //var date =new Date(req.params.id);
   var time=moment.unix(req.params.id).format('LL');
-  var result
-   res.send('The id you specified is ' + moment(time).unix());
+  var result={'unix':moment(time).format('X'),'natural':time};
+   res.send('The id you specified is ' + result);
 });
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
