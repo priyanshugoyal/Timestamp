@@ -39,22 +39,18 @@ app.route('/')
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
 app.get('/:id', function(req, res){
-  //var date =new Date(req.params.id);
-      var patt = /^[0-9]*$/g;
-      var isNum = patt.test(time);
+  var time=req.params.id;
+      var patt = /[0-9]{8,}/g;
 var data={};
-if(isNum){
-        var date = moment.unix(time);
+if(patt.test(time)){
          data = {
             unix: time,
             natural : moment.unix(time).format('LL')
         }
     } else {
-        if(moment(time,'MMMM DD YYYY').isValid()){
-            var date = moment(time,'MMMM DD YYYY');
-            console.log(time);
+        if(moment(time).isValid()){
             var data = {
-                unix: date.format('X'),
+                unix: moment(time).format('X'),
                 natural: time
             }
         } else {
@@ -65,7 +61,7 @@ if(isNum){
         }
     }
   
-  res.json(result);
+  res.json(data);
 });
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
