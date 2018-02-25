@@ -40,7 +40,7 @@ app.route('/')
     })
 app.get('/:id', function(req, res){
   var time=req.params.id;
-      var patt = /[0-9]{8,}/g;
+      var patt = /[0-9]{9,}/g;
 var data={};
 if(patt.test(time)){
          data = {
@@ -48,9 +48,9 @@ if(patt.test(time)){
             natural : moment.unix(time).format('LL')
         }
     } else {
-        if(moment(time).isValid()){
+        if(moment(time,'MMMM DD YYYY').isValid()){
             var data = {
-                unix: moment(time).format('X'),
+                unix: moment(time,'MMMM DD YYYY').format('X'),
                 natural: time
             }
         } else {
