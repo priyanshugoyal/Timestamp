@@ -40,9 +40,32 @@ app.route('/')
     })
 app.get('/:id', function(req, res){
   //var date =new Date(req.params.id);
-  var time=moment.unix(req.params.id).format('LL');
-  var result={'unix':moment(time).format('X'),'natural':time};
-   res.send('The id you specified is ' + result);
+      var patt = /^[0-9]*$/g;
+      var isNum = patt.test(time);
+var data={};
+if(isNum){
+        var date = moment.unix(time);
+         data = {
+            unix: time,
+            natural : moment.unix(time).format('LL')
+        }
+    } else {
+        if(moment(time,'MMMM DD YYYY').isValid()){
+            var date = moment(time,'MMMM DD YYYY');
+            console.log(time);
+            var data = {
+                unix: date.format('X'),
+                natural: time
+            }
+        } else {
+            return {
+                unix: null,
+                natural: null
+            }
+        }
+    }
+  
+  res.json(result);
 });
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
